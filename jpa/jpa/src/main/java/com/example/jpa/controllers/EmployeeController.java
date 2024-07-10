@@ -3,35 +3,54 @@ package com.example.jpa.controllers;
 
 
 import com.example.jpa.dto.EmployeeDTO;
+import com.example.jpa.entities.EmployeeEntity;
+import com.example.jpa.repositories.EmployeeRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/employees")
 public class EmployeeController {
 
-//    @GetMapping(path = "/getmymessage")
+    private EmployeeRepository employeeRepository;
+
+    public EmployeeController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
+    //    @GetMapping(path = "/getmymessage")
 //    public String getMySuperSecretMessage(){
 //        return "Secret message: This is my first get message";
 //    }
 
+//    @GetMapping(path = "/{employeeID}")
+//    public EmployeeDTO getEmployeeById(@PathVariable(name = "employeeID") Long employeeId){
+//        return new EmployeeDTO(employeeId, "Mahee", "mahidhar.mahi030@gmail.com", 27, LocalDate.of(2024, 2, 1), true);
+//    }
+
     @GetMapping(path = "/{employeeID}")
-    public EmployeeDTO getEmployeeById(@PathVariable(name = "employeeID") Long employeeId){
-        return new EmployeeDTO(employeeId, "Mahee", "mahidhar.mahi030@gmail.com", 27, LocalDate.of(2024, 2, 1), true);
+    public EmployeeEntity getEmployeeById(@PathVariable(name = "employeeID") Long employeeId){
+        return employeeRepository.findById(employeeId).orElse(null);
     }
 
     @GetMapping
-    public String getAllEmployees(@RequestParam(required = false) Integer age,
-                                  @RequestParam(required = false) String sortBy){
-        return "Hi age" + age+ " "+ sortBy;
+    public List<EmployeeEntity> getAllEmployees(@RequestParam(required = false) Integer age,
+                                                @RequestParam(required = false) String sortBy){
+        return employeeRepository.findAll();
     }
 
+//    @PostMapping
+//    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO inputEmployee){
+//         inputEmployee.setId(100L);
+//         return inputEmployee;
+////        return "Hello from post service";
+//    }
+
     @PostMapping
-    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO inputEmployee){
-         inputEmployee.setId(100L);
-         return inputEmployee;
-//        return "Hello from post service";
+    public EmployeeEntity createEmployee(@RequestBody EmployeeEntity inputEmployee){
+        return employeeRepository.save(inputEmployee);
     }
 
     //Understand how the dependency injection is happening in above post method
