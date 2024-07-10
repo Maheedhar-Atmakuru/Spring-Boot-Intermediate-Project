@@ -11,15 +11,19 @@ public class EmployeeDTO {
     private LocalDate dateOfJoining;
     private Boolean isActive;
 
+    public EmployeeDTO() {
 
-    public EmployeeDTO(Integer age, Long id, String name, String email, LocalDate dateOfJoining, Boolean isActive) {
-        this.age = age;
+    }
+
+    public EmployeeDTO (Long id, String name, String email, Integer age, LocalDate dateOfJoining, Boolean isActive) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.age = age;
         this.dateOfJoining = dateOfJoining;
         this.isActive = isActive;
     }
+
 
     public Boolean getActive() {
         return isActive;
