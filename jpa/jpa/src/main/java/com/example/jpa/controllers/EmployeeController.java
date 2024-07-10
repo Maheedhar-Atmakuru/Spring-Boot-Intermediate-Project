@@ -27,4 +27,23 @@ public class EmployeeController {
         return "Hi age" + age+ " "+ sortBy;
     }
 
+    @PostMapping
+    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO inputEmployee){
+         inputEmployee.setId(100L);
+         return inputEmployee;
+//        return "Hello from post service";
+    }
+
+    //Understand how the dependency injection is happening in above post method
+
+    @PutMapping
+    public String updateEmployee(){
+        return "Hello from Put service";
+    }
+
+    @DeleteMapping
+    public String deleteEmployee(){
+        return "Hello from delete service";
+    }
+
 }
