@@ -4,7 +4,8 @@ package com.example.jpa.controllers;
 
 import com.example.jpa.dto.EmployeeDTO;
 import com.example.jpa.entities.EmployeeEntity;
-import com.example.jpa.repositories.EmployeeRepository;
+//import com.example.jpa.repositories.EmployeeRepository;
+import com.example.jpa.services.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,10 +15,16 @@ import java.util.List;
 @RequestMapping(path = "/employees")
 public class EmployeeController {
 
-    private EmployeeRepository employeeRepository;
+//    private EmployeeRepository employeeRepository;
+//
+//    public EmployeeController(EmployeeRepository employeeRepository) {
+//        this.employeeRepository = employeeRepository;
+//    }
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    private EmployeeService employeeService;
+
+    public EmployeeController (EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     //    @GetMapping(path = "/getmymessage")
@@ -32,13 +39,13 @@ public class EmployeeController {
 
     @GetMapping(path = "/{employeeID}")
     public EmployeeEntity getEmployeeById(@PathVariable(name = "employeeID") Long employeeId){
-        return employeeRepository.findById(employeeId).orElse(null);
+        return employeeService.getEmployeeById(employeeId);
     }
 
     @GetMapping
     public List<EmployeeEntity> getAllEmployees(@RequestParam(required = false) Integer age,
                                                 @RequestParam(required = false) String sortBy){
-        return employeeRepository.findAll();
+        return employeeService.getAllEmployees();
     }
 
 //    @PostMapping
@@ -50,7 +57,7 @@ public class EmployeeController {
 
     @PostMapping
     public EmployeeEntity createEmployee(@RequestBody EmployeeEntity inputEmployee){
-        return employeeRepository.save(inputEmployee);
+        return employeeService.save(inputEmployee);
     }
 
     //Understand how the dependency injection is happening in above post method
