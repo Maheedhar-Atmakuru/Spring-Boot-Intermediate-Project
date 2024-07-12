@@ -4,7 +4,6 @@ package com.example.jpa.controllers;
 
 import com.example.jpa.dto.EmployeeDTO;
 import com.example.jpa.entities.EmployeeEntity;
-//import com.example.jpa.repositories.EmployeeRepository;
 import com.example.jpa.services.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,12 +37,12 @@ public class EmployeeController {
 //    }
 
     @GetMapping(path = "/{employeeID}")
-    public EmployeeEntity getEmployeeById(@PathVariable(name = "employeeID") Long employeeId){
+    public EmployeeDTO getEmployeeById(@PathVariable(name = "employeeID") Long employeeId){
         return employeeService.getEmployeeById(employeeId);
     }
 
     @GetMapping
-    public List<EmployeeEntity> getAllEmployees(@RequestParam(required = false) Integer age,
+    public List<EmployeeDTO> getAllEmployees(@RequestParam(required = false) Integer age,
                                                 @RequestParam(required = false) String sortBy){
         return employeeService.getAllEmployees();
     }
@@ -56,7 +55,7 @@ public class EmployeeController {
 //    }
 
     @PostMapping
-    public EmployeeEntity createEmployee(@RequestBody EmployeeEntity inputEmployee){
+    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO inputEmployee){
         return employeeService.save(inputEmployee);
     }
 
